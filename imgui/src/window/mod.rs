@@ -558,6 +558,9 @@ impl<'ui, 'a, Label: AsRef<str>> Window<'ui, 'a, Label> {
     pub fn build<R, F: FnOnce() -> R>(self, f: F) -> Option<R> {
         self.begin().map(|_window| f())
     }
+    pub fn build_with<R, F: FnOnce(&'ui Ui) -> R>(self, f: F) -> Option<R> {
+        self.begin().map(move |token| f(token.0))
+    }
 }
 
 create_token!(
